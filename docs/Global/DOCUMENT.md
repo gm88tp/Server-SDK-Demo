@@ -184,7 +184,7 @@ CP收到请求后，应进行发货操作，在发货成功后返回“ok“(字
 
 ### **五、** **问卷调查链接**
 
-我方提供原始链接，CP加上对应参数后使用 
+我方提供问卷ID，CP组合对应参数后生成完整链接 
 
 **请求类型：**
 
@@ -194,11 +194,13 @@ GET
 
 | 字段      | 类型   | 参与签名   | 说明                          |
 | ------------- | ----------| ---------- | --------------------------------- |
-| uid    | int    | GM ID                                ||
-| game_id   | int      | appID       ||
-| payload      | string    | 透传参数，长度不超过30，仅支持 英文、数字、-_ ||
-| timestamp | string | 时间戳 ||
-| signature     | string | 签名字段 不参与签名                       ||
+| uid    | int    | 是       |GM ID|
+| game_id   | int      | 是      |appID|
+| payload      | string    | 是       |透传参数，长度不超过30，仅支持 英文、数字、-_|
+| timestamp | string | 是       |时间戳|
+| signature     | string | 否                      |签名字段|
+| wjx_id | int | 否 |问卷ID，由我方提供|
+| action | string | 否 |固定值：wjx.activity|
 
 **signature签名**
 
@@ -227,8 +229,6 @@ $signature = md5($perstr);
 ```
 
 **链接生成示例**
-原始链接：
-https://mdemo.hkpctimes.com/api/?action=wjx.activity&wjx_id=1
 
 完整链接：
 https://mdemo.hkpctimes.com/api/?action=wjx.activity&wjx_id=1&uid=1&game_id=11001&payload=1&timestamp=110001042305&signature=e96a7e4f7373adb8a39bd5a4ed3084e6
