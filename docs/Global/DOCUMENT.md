@@ -446,14 +446,17 @@ $signature = md5($prestr.'&'.$secret_key);
             "zone_id": "0",
             "zone_name": "默认大区",
             "role_list_url": "https://domain/role_list.php",
-            "gift_product_url": "https://domain/gift_product.php",
+            "gift_product_url": "https://domain/gift_product.php",   // 脚本礼包列表
+            "cate_gift_url": "https://domain/gift_product.php",   // h5页面下角色可用的礼包列表
+            "verift_gift_url": "https://domain/gift_product.php",   // h5页面下购买时验证该礼包该角色是否可买
+            "gift_cate_url": "https://domain/gift_product.php",   // 礼包分类信息
             "notify_url": "https://domain/notify.php"
         }
     ]
 }
 ```
 
-### 获取上架礼品商品列表
+### 脚本获取礼品商品列表
 #### Reuqest
 
 - Method: **GET**
@@ -462,6 +465,7 @@ $signature = md5($prestr.'&'.$secret_key);
 - Body:
 ```
 {
+    "group_id" : "1", // 母游戏id
     "timestamp" : "1631173146", // 当前时间戳
     "signature" : "0af83fcf08d75ca5aae48383154cb037" // 签名
 }
@@ -479,6 +483,13 @@ $signature = md5($prestr.'&'.$secret_key);
             "item_id":"1", // 礼包id
             "item_name":"测试大区", // 礼包名称
             "price":"1", // 价格
+            "total_num":"1", // 总共可购数量
+            "purchase_num":"1", // 剩余可购数量
+            "is_buy":"1", // 1角色可购买 0不可购买
+            "context":"xxxx", // 购买条件文案
+            "cate_id":"1", // 分类id
+            "cate_name":"1", // 分类名称
+            "props_desc":"1", // 礼包描述
             "props_list": [
                 {
                     "id":1, 道具id
@@ -486,6 +497,117 @@ $signature = md5($prestr.'&'.$secret_key);
                     "num":0, 道具数量
                 }
             ]
+        },
+    ]
+}
+```
+
+### 分类获取礼品商品列表
+#### Reuqest
+
+- Method: **GET**
+- URL: ```CP提供```
+- Headers： Content-Type:application/json
+- Body:
+```
+{
+    "group_id" : "1", // 母游戏id
+    "cate_id" : "1", // 分类id
+    "role_id" : "1", // 角色id
+    "user_id" : "1", // 用户id
+    "timestamp" : "1631173146", // 当前时间戳
+    "signature" : "0af83fcf08d75ca5aae48383154cb037" // 签名
+}
+```
+
+#### Response
+- Body
+```
+{
+    "status":true,
+    "errorno":0,
+    "errortext":"OK",
+    "data":[
+        {
+            "item_id":"1", // 礼包id
+            "item_name":"测试大区", // 礼包名称
+            "price":"1", // 价格
+            "total_num":"1", // 总共可购数量
+            "purchase_num":"1", // 剩余可购数量
+            "is_buy":"1", // 1角色可购买 0不可购买
+            "context":"xxxx", // 购买条件文案
+            "cate_id":"1", // 分类id
+            "cate_name":"1", // 分类名称
+            "props_desc":"1", // 礼包描述
+            "props_list": [
+                {
+                    "id":1, 道具id
+                    "img":"https://xxxxx", 道具图片全连接
+                    "num":0, 道具数量
+                }
+            ]
+        },
+    ]
+}
+```
+
+### 验证礼品商品是否可购买
+#### Reuqest
+
+- Method: **GET**
+- URL: ```CP提供```
+- Headers： Content-Type:application/json
+- Body:
+```
+{
+    "item_id" : "1", // 分类id
+    "role_id" : "1", // 角色id
+    "user_id" : "1", // 用户id
+    "timestamp" : "1631173146", // 当前时间戳
+    "signature" : "0af83fcf08d75ca5aae48383154cb037" // 签名
+}
+```
+
+#### Response
+- Body
+```
+{
+    "status":true,
+    "errorno":0,
+    "errortext":"OK",
+    "data": true  true 可购买 false 不可购买
+}
+```
+
+### 获取礼品分类列表
+#### Reuqest
+
+- Method: **GET**
+- URL: ```CP提供```
+- Headers： Content-Type:application/json
+- Body:
+```
+{
+    "group_id" : "1", // 母游戏id
+    "role_id" : "0", // 角色id  登录前为0
+    "user_id" : "0", // 用户id  登录前为0
+    "timestamp" : "1631173146", // 当前时间戳
+    "signature" : "0af83fcf08d75ca5aae48383154cb037" // 签名
+}
+```
+
+#### Response
+- Body
+```
+{
+    "status":true,
+    "errorno":0,
+    "errortext":"OK",
+    "data":[
+        {
+            "cate_id":"1", // 分类id
+            "cate_name":"测试大区", // 分类名称
+            "is_show":true, // 是否显示 true显示 false 不显示
         },
     ]
 }
