@@ -54,15 +54,15 @@ POST
 
 **回调参数**
 
-| 字段      | 类型   | 参与签名   | 说明                          |
-| ------------- | ----------| ---------- | --------------------------------- |
-| order_id      | string |Y| 怪猫订单号                    |
-| server_id     | string |Y| 区服号                         |
-| role_id       | string | Y|角色ID  |
-| developerinfo | string | Y|订单附加信息，透传参数 |
-| coin          | float  | Y|订单金额，单位：元            |
-| signature     | string | N|签名字段                      |
-| status | string |N| ORDER_ACCEPTED 支付成功；<br />ORDER_REFUNDED 已退款；<br />默认为 ORDER_ACCEPTED |
+| 字段      | 类型   | 参与签名  |  必须   | 说明                          |
+| ------------- | ----------| ---------- | ---------- | --------------------------------- |
+| order_id      | string |Y|Y| 怪猫订单号                    |
+| server_id     | string |Y|Y| 区服号                         |
+| role_id       | string | Y|Y|角色ID  |
+| developerinfo | string | Y|Y|订单附加信息，透传参数 |
+| coin          | float  | Y|Y|订单金额，单位：元            |
+| signature     | string | N|Y|签名字段                      |
+| status | string |N|N| ORDER_ACCEPTED 支付成功；<br />ORDER_REFUNDED 已退款；<br />无此参数时默认为 ORDER_ACCEPTED |
 
 **signature签名**
 
